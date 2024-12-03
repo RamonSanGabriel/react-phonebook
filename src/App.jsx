@@ -1,15 +1,11 @@
-import './App.css';
+import React from 'react';
 
-function App() {
-  const [count, setCount] = useState(0);
-
+const App = () => {
   return (
-    <>
-      <div>
-        <h1>React Phonebook</h1>
-      </div>
-    </>
+    <div>
+      <h1>Phonebook React</h1>
+    </div>
   );
-}
+};
 
 export default App;
