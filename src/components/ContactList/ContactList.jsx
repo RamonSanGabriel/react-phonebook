@@ -1,8 +1,9 @@
 import css from './ContactList.module.css';
 import { CiUser, CiPhone } from 'react-icons/ci';
 
-const ContactList = ({ handleDelete, filterContacts, contacts }) => {
+const ContactList = ({ filterContacts, handleDelete }) => {
   const filteredContacts = filterContacts();
+
   return (
     <div>
       <ul className={css.icons}>
@@ -15,9 +16,8 @@ const ContactList = ({ handleDelete, filterContacts, contacts }) => {
               <CiPhone /> {filteredContact.number}
             </p>
             <button
-              onClick={() => {
-                handleDelete(id);
-              }}
+              onClick={() => handleDelete(filteredContact.id)}
+              type="button"
             >
               Delete
             </button>

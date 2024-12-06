@@ -6,6 +6,7 @@ import Section from './components/Section/Section';
 import css from './App.module.css';
 import Filter from './components/FIlter/Filter';
 import ContactList from './components/ContactList/ContactList';
+import { Notify } from 'notiflix';
 
 export const initialContacts = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -51,7 +52,9 @@ const App = () => {
       name: name.trim(),
       number: number.trim(),
     });
-
+    Notify.success(`${name} was successfully added`, {
+      position: 'right-top',
+    });
     // Reset form
     setName('');
     setNumber('');
@@ -67,21 +70,37 @@ const App = () => {
   };
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
+    // console.log(e.target.value);
   };
 
   const filterContacts = () => {
-    /*   if (filter === '') {
-      return contacts;
-    } */
     const filterLowerCase = filter.toLowerCase();
     return contacts.filter((contact) =>
       contact.name.toLowerCase().includes(filterLowerCase)
     );
   };
+
+  const deleteContact = (id) => {
+    setContacts((prevContacts) =>
+      prevContacts.contacts.filter((contacts) => contacts.id !== id)
+    );
+  };
+  /*   const handleDelete = (id) => {
+    const deleteContact1 = contacts.filter((contact) => contact.id !== id);
+    setContacts(deleteContact1);
+    Notify.success(`${contacts.name} was deleted`, {
+      position: 'right-top',
+    });
+  }; */
+
   const handleDelete = (id) => {
-    // console.log('Delete button clicked');
-    const deleteContact = contacts.filter((contact) => contact.id !== id);
-    setContacts(deleteContact);
+    const contactToDelete = contacts.find((contact) => contact.id === id);
+    if (!contactToDelete) return;
+    const updatedContacts = contacts.filter((contact) => contact.id !== id);
+    setContacts(updatedContacts);
+    Notify.warning(`${contactToDelete.name} was deleted`, {
+      position: 'right-top',
+    });
   };
 
   return (
@@ -93,6 +112,8 @@ const App = () => {
           handleSubmit={handleSubmit}
           handleNameChange={handleNameChange}
           handleNumberChange={handleNumberChange}
+          name={name}
+          number={number}
         />
       </Section>
 
