@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
 
-const ContactForm = ({
+export const ContactForm = ({
   handleSubmit,
   handleNameChange,
   handleNumberChange,
@@ -12,14 +12,13 @@ const ContactForm = ({
     <div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">
-          <p>Fullname:</p>
+          <p>Name:</p>
           <input
             type="text"
             name="name"
             id="name"
-            placeholder="Enter your name"
+            placeholder="Enter your full name"
             autoComplete="off"
-            autoCapitalize="on"
             pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan."
             value={name}
@@ -56,11 +55,11 @@ const ContactForm = ({
     </div>
   );
 };
+
 ContactForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleNameChange: PropTypes.func.isRequired,
   handleNumberChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
 };
-export default ContactForm;

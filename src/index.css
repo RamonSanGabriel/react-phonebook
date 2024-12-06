@@ -39,10 +39,10 @@ ul,
 ol,
 li {
   list-style: none;
-  display: flex;
+  /* display: flex; */
   /* gap: 20px; */
   padding: 0;
-  flex-direction: column;
+  /* flex-direction: column; */
 }
 button {
   border-radius: 8px;
@@ -54,7 +54,7 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 button:hover {
   border-color: #646cff;
@@ -82,4 +82,8 @@ input {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
+
+  &::placeholder {
+    text-align: center;
+  }
 }

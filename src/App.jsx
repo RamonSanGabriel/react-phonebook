@@ -1,10 +1,11 @@
 import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
-import ContactForm from './components/ContactForm/ContactForm';
+import { ContactForm } from './components/ContactForm/ContactForm';
 import Header from './components/Header/Header';
 import Section from './components/Section/Section';
 import css from './App.module.css';
 import Filter from './components/FIlter/Filter';
+import ContactList from './components/ContactList/ContactList';
 
 export const initialContacts = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -21,6 +22,10 @@ const App = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const addContact = (newContact) => {
     const existingContact = contacts.find(
@@ -60,7 +65,19 @@ const App = () => {
     setNumber(e.target.value);
     // console.log(e.target.value);
   };
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+  };
 
+  const filterContacts = () => {
+    /*   if (filter === '') {
+      return contacts;
+    } */
+    const filterLowerCase = filter.toLowerCase();
+    return contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(filterLowerCase)
+    );
+  };
   const handleDelete = (id) => {
     // console.log('Delete button clicked');
     const deleteContact = contacts.filter((contact) => contact.id !== id);
@@ -79,18 +96,21 @@ const App = () => {
         />
       </Section>
 
-      <Section title="Contacts">{/* <h2>{title}</h2> */}</Section>
-
-      <Section title="Filter by contact name">{/* <h3>{title}</h3> */}</Section>
-      <Filter />
-      <ul>
-        {contacts.map((contact) => (
-          <li key={contact.id}>
-            <h4>{contact.name}</h4>
-            <button onClick={() => handleDelete(contact.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <Section title="Contacts">
+        <Filter
+          filter={filter}
+          handleFilterChange={handleFilterChange}
+          setFilter={setFilter}
+        />
+      </Section>
+      <Section title="Contacts list">
+        <ul>
+          <ContactList
+            handleDelete={handleDelete}
+            filterContacts={filterContacts}
+          />
+        </ul>
+      </Section>
     </div>
   );
 };
